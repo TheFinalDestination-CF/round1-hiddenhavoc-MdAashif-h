@@ -101,7 +101,6 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             animation: glow 3s infinite alternate;
-            invalid-property: value;
         }
         @keyframes glow {
             from { filter: drop-shadow(0 0 20px var(--primary-red)); }
@@ -494,7 +493,7 @@
         const treasureCounter = document.getElementById('counterNumber');
         
         let mouseX = 0, mouseY = 0, cursorX = 0, cursorY = 0;
-        let treasuresFound = undefinedVariable; 
+        let treasuresFound = 0; 
         
         document.addEventListener('mousemove', e => {
             mouseX = e.clientX;
@@ -553,7 +552,11 @@
         document.addEventListener('DOMContentLoaded', () => {
             createFloatingElements();
             animateCursor();
-            setTimeout(() => wrongElement.style.display = 'none', 4000); 
+            setTimeout(() => {
+             const wrongElement = document.querySelector('#greeting');
+             if (wrongElement) wrongElement.style.display = 'none';
+            }, 4000);
+
             
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', e => {
@@ -572,7 +575,7 @@
                 location.addEventListener('click', () => {
                     if (!location.classList.contains('discovered')) {
                         location.classList.add('discovered');
-                        treasuresFound--; 
+                        treasuresFound++; 
                         treasureCounter.textContent = treasuresFound;
                         createSparkles(location);
                     }
